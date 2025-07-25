@@ -16,6 +16,9 @@ from src.logger import logging
 from src.components.data_transformation import DataTransformation
 from src.components.data_transformation import DataTransformationConfig
 
+from src.components.model_trainer import ModelTrainerConfig
+from src.components.model_trainer import ModelTrainer
+
 # 🛠️ Configuration Class for Data Ingestion
 
 @dataclass
@@ -65,17 +68,17 @@ class DataIngestion:
         
 
 if __name__ == "__main__":
-    # Instantiate the DataIngestion class
     obj = DataIngestion()
-
-    # call the ingestion method
     train_data, test_data = obj.initiate_data_ingestion()
 
-    # perform the transformers
     data_transformation = DataTransformation()
-    train_arr, test_arr,preprocessor_path  = data_transformation.initiate_data_transformation(train_data, test_data)
+    train_arr, test_arr, _ = data_transformation.initiate_data_transformation(train_data, test_data)
 
+    ModelTrainer = ModelTrainer()
+    r2_square = ModelTrainer.initiate_model_trainer(train_arr, test_arr)
 
-    # print the output file paths 
+    # ✅ Add this to show the score
+    print(f"✅ Model training completed. R2 Score: {r2_square:.4f}")
 
     print(f"✅ Data ingestion completed.\nTrain data saved to: {train_data}\nTest data saved to: {test_data}")
+
