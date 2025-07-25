@@ -3,6 +3,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from starlette.responses import RedirectResponse
+import os
 
 
 import uvicorn
@@ -67,7 +68,10 @@ async def predict_data(
         })
     
 
-if __name__ =="__main__":
-    uvicorn.run(app,host='0.0.0.0',port=8001)
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8000))  # Default to 8000 locally
+    uvicorn.run(app, host="0.0.0.0", port=port)
+
 
 
